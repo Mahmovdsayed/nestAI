@@ -15,14 +15,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-class PromptRequest(BaseModel):
-    message: str
 
-@app.post("/send/")
-async def send_prompt(request: PromptRequest):
+@app.get("/send/")
+async def send_prompt(message: str):
     try:
-        # Assuming ai.prompt can be awaited asynchronously
-        response = await ai.prompt(message=request.message)
+        response = await ai.prompt(message=message)
+        print(response)
         return {"status": "success", "response": response}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
