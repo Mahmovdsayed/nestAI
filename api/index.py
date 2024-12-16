@@ -9,10 +9,10 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"], 
-    allow_headers=["*"],  
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 class PromptRequest(BaseModel):
@@ -21,7 +21,8 @@ class PromptRequest(BaseModel):
 @app.post("/send/")
 async def send_prompt(request: PromptRequest):
     try:
-        response = ai.prompt(message=request.message)
+        # Assuming ai.prompt can be awaited asynchronously
+        response = await ai.prompt(message=request.message)
         return {"status": "success", "response": response}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
