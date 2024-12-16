@@ -1,0 +1,3 @@
+fastapi
+uvicorn
+meta_ai_api
